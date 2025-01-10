@@ -1,0 +1,42 @@
+
+Question Statement
+You are given an array arr of integers where each element represents a portion of work.
+Your task is to divide this array into k non-empty contiguous subarrays such that the largest sum among these subarrays is minimized.
+Solution Explanation
+Problem Requirements:
+
+Divide the array arr into k contiguous subarrays.
+Minimize the maximum sum among these subarrays.
+Approach:
+
+Use binary search on the answer:
+Define the range [s, e]:
+s: The maximum element in the array (minimum possible largest sum).
+e: The sum of all elements (maximum possible largest sum).
+Use a helper function func to check if the array can be split into k subarrays such that the largest sum is ≤ mid.
+Steps:
+
+Initialize the range [s, e]:
+s = max_element(arr) (minimum largest sum).
+e = sum of all elements (maximum largest sum).
+Perform binary search:
+For each mid, check if it's valid using the func function.
+If valid, update the answer and try for a smaller mid.
+If invalid, increase the lower bound.
+Helper Function:
+
+Simulates splitting the array into k subarrays with mid as the largest possible sum.
+Counts the number of subarrays formed and ensures it does not exceed k.
+Returning the Result:
+
+After binary search, the result is stored in ans, representing the minimum largest sum.
+Complexity Analysis
+Time Complexity:
+
+Finding max and sum: O(n).
+Binary Search: The range of binary search is [s,e], taking O(log(e−s)).
+Simulation in func: For each mid-point, we iterate through the array, taking O(n) time.
+Total: O(n+nlog(e−s)).
+Space Complexity:
+
+The space complexity is O(1) as no additional space is used.
