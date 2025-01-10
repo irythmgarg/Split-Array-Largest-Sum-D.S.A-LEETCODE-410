@@ -1,0 +1,46 @@
+class Solution {
+public:
+    // Helper function to check if the array can be split into `k` subarrays
+    // such that the maximum sum of any subarray is <= `mid`.
+    bool func(int k, vector<int>& arr, int mid) {
+        int size = arr.size();
+        int count = 1; // Number of subarrays formed
+        int pages = 0; // Current sum of the subarray
+
+        for (int i = 0; i < size; i++) {
+            pages += arr[i]; // Add the current element to the subarray
+            if (pages > mid) { // If the current sum exceeds `mid`
+                count++;       // Start a new subarray
+                pages = arr[i]; // Reset the sum to the current element
+                if (count > k)  // If more than `k` subarrays are needed
+                    return false; // `mid` is too small
+            }
+        }
+        return true; // It's possible to split with this `mid`
+    }
+
+    // Main function to find the minimum largest sum among `k` subarrays
+    int splitArray(vector<int>& arr, int k) {
+        int s = *max_element(arr.begin(), arr.end()); // Smallest possible largest sum
+        int e = 0;                                   // Largest possible largest sum (sum of all elements)
+        
+        for (int i = 0; i < arr.size(); i++) {
+            e += arr[i];
+        }
+
+        int ans = INT_MAX; // To store the minimum largest sum
+
+        // Binary search to find the optimal largest sum
+        while (s <= e) {
+            int mid = (s + e) / 2; // Calculate mid-point
+            if (func(k, arr, mid)) { // Check if it's possible to split with `mid` as the largest sum
+                ans = min(ans, mid); // Update the answer if valid
+                e = mid - 1; // Try for a smaller largest sum
+            } else {
+                s = mid + 1; // Increase the largest sum
+            }
+        }
+        return ans; // Return the minimum largest sum
+    }
+};
+
